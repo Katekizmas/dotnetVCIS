@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace dotnetVCIS.Models
 {
     public class Paslauga
     {
+        [Key]
         public int id_paslauga { get; set; }
         public string pavadinimas { get; set; }
         public string aprasymas { get; set; }

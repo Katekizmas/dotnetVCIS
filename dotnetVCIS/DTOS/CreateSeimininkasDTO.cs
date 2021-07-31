@@ -4,15 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dotnetVCIS.Models
+namespace dotnetVCIS.DTOS
 {
-    public record Seimininkas
+    public record CreateSeimininkasDTO
     {
-        public Guid id_seimininkas { get; init; }
+        [Required]
         public string vardas { get; init; }
+        [Required]
         public string pavarde { get; init; }
+        [Required]
         public string pastas { get; init; }
+        [Required]
         public string telnr { get; init; }
+        [Required]
         public string slaptazodis { get; init; }
     }
 }
