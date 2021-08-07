@@ -6,7 +6,7 @@ using System.Linq;
 namespace dotnetVCIS.Repositories
 {
 
-    public class InMemSeimininkaiRepository : ISeimininkaiRepository
+    /*public class InMemSeimininkaiRepository : ISeimininkaiInterface
     {
         private readonly List<Seimininkas> seimininkai = new()
         {
@@ -41,7 +41,7 @@ namespace dotnetVCIS.Repositories
 
         
 
-        public IEnumerable<Seimininkas> GetSeimininkas()
+        public IEnumerable<Seimininkas> GetSeimininkus()
         {
             return seimininkai;
         }
@@ -64,5 +64,5 @@ namespace dotnetVCIS.Repositories
             var index = seimininkai.FindIndex(existingSeimininkas => existingSeimininkas.id_seimininkas == id_seimininkas);
             seimininkai.RemoveAt(index);
         }
-    }
+    }*/
 }

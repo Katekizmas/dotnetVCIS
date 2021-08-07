@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace dotnetVCIS.Repositories
 {
-    public interface ISeimininkaiRepository
+    public interface ISeimininkaiInterface
     {
-        IEnumerable<Seimininkas> GetSeimininkas();
+        IEnumerable<Seimininkas> GetSeimininkus();
         Seimininkas GetSeimininkas(Guid id_seimininkas);
         void CreateSeimininkas(Seimininkas seimininkas);
         void UpdateSeimininkas(Seimininkas seimininkas);

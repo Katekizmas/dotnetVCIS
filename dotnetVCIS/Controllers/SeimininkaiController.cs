@@ -12,12 +12,12 @@ namespace dotnetVCIS.Controllers
 {
     //
     [ApiController]
-    [Route("seimininkas")] // [controller] GET /seimininkai
+    [Route("seimininkas")] // [controller] /seimininkas
     public class SeimininkaiController : ControllerBase
     {
-        private readonly ISeimininkaiRepository repository;
+        private readonly ISeimininkaiInterface repository;
 
-        public SeimininkaiController(ISeimininkaiRepository repository)
+        public SeimininkaiController(ISeimininkaiInterface repository)
         {
             this.repository = repository;
         }
@@ -25,12 +25,12 @@ namespace dotnetVCIS.Controllers
         [HttpGet] // GET /seimininkas
         public ActionResult<IEnumerable<SeimininkasDTO>> getSeimininkai()
         {
-            var seimininkai = repository.GetSeimininkas().Select(seimininkas => seimininkas.AsDTO());
-
+            //var seimininkai = repository.GetSeimininkus().Select(seimininkas => seimininkas.AsDTO());
+            var seimininkai = repository.GetSeimininkus();
             if(seimininkai is null)
                 return NotFound();
 
-            return Ok(seimininkai);
+            return Ok(new JsonResult(seimininkai));
         }
         
         [HttpGet("{id_seimininkas}")] // GET /seimininkas/{id}
