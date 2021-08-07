@@ -23,10 +23,10 @@ namespace dotnetVCIS.Controllers
         }
 
         [HttpGet] // GET /seimininkas
-        public async Task<ActionResult<IEnumerable<SeimininkasDTO>>> GetSeimininkus()
+        public async Task<ActionResult<IEnumerable<SeimininkasDTO>>> GetSeimininkusAsync()
         {
             //var seimininkai = repository.GetSeimininkus().Select(seimininkas => seimininkas.AsDTO());
-            var seimininkai = await _repository.GetSeimininkus();
+            var seimininkai = await _repository.GetSeimininkusAsync();
             Console.WriteLine(seimininkai);
             if(seimininkai is null)
                 return NotFound();
@@ -35,12 +35,12 @@ namespace dotnetVCIS.Controllers
         }
 
         [HttpGet("{pastas}")] // GET /seimininkas/{pastas}
-        public async Task<ActionResult<SeimininkasDTO>> GetSeimininkasByEmail(string pastas)
+        public async Task<ActionResult<SeimininkasDTO>> GetSeimininkasByEmailAsync(string pastas)
         {
             if (pastas is null)
                 return BadRequest();
 
-            var seimininkas = await _repository.GetSeimininkasByEmail(pastas);
+            var seimininkas = await _repository.GetSeimininkasByEmailAsync(pastas);
 
             if(seimininkas is null)
                 return NotFound();
@@ -49,7 +49,7 @@ namespace dotnetVCIS.Controllers
         }
 
         [HttpPost] // POST /seimininkas
-        public async Task<ActionResult<SeimininkasDTO>> CreateSeimininkas(CreateSeimininkasDTO seimininkasDTO)
+        public async Task<ActionResult<SeimininkasDTO>> CreateSeimininkasAsync(CreateSeimininkasDTO seimininkasDTO)
         {
             if (seimininkasDTO is null)
                 return BadRequest();
@@ -65,15 +65,15 @@ namespace dotnetVCIS.Controllers
                 slaptazodis = seimininkasDTO.slaptazodis
             };
 
-            var insertedSeimininkas = await _repository.CreateSeimininkas(seimininkas);
+            var insertedSeimininkas = await _repository.CreateSeimininkasAsync(seimininkas);
 
             return Created("Created", insertedSeimininkas);
         }
 
         [HttpPut("{id_seimininkas}")] // PUT /seimininkas/{id} // Poto paimti id iš body.
-        public async Task<ActionResult> UpdateSeimininkas(int id_seimininkas, UpdateSeimininkasDTO seimininkasDTO)
+        public async Task<ActionResult> UpdateSeimininkasAsync(int id_seimininkas, UpdateSeimininkasDTO seimininkasDTO)
         {
-            var existingSeimininkas = await _repository.GetSeimininkasByID(id_seimininkas);
+            var existingSeimininkas = await _repository.GetSeimininkasByIdAsync(id_seimininkas);
 
             if (existingSeimininkas is null)
                 return NotFound();
@@ -84,20 +84,20 @@ namespace dotnetVCIS.Controllers
                 //slaptazodis = seimininkasDTO.slaptazodis
             };
 
-            await _repository.UpdateSeimininkas(updatedSeimininkas);
+            await _repository.UpdateSeimininkasAsync(updatedSeimininkas);
 
             return NoContent();
         }
 
         [HttpDelete("{id_seimininkas}")] // DELETE /seimininkas/
-        public async Task<ActionResult> DeleteSeimininkas(int id_seimininkas)
+        public async Task<ActionResult> DeleteSeimininkasAsync(int id_seimininkas)
         {
-            var existingSeimininkas = await _repository.GetSeimininkasByID(id_seimininkas);
+            var existingSeimininkas = await _repository.GetSeimininkasByIdAsync(id_seimininkas);
 
             if (existingSeimininkas is null)
                 return NotFound();
 
-            await _repository.DeleteSeimininkas(id_seimininkas);
+            await _repository.DeleteSeimininkasAsync(id_seimininkas);
 
             return NoContent();
         }

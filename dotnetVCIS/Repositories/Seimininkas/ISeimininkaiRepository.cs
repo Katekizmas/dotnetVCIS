@@ -7,11 +7,11 @@ namespace dotnetVCIS.Repositories
 {
     public interface ISeimininkaiRepository
     {
-        Task<IEnumerable<Seimininkas>> GetSeimininkus();
-        Task<Seimininkas> GetSeimininkasByEmail(string pastas);
-        Task<Seimininkas> GetSeimininkasByID(int id_seimininkas);
-        Task<Seimininkas> CreateSeimininkas(Seimininkas seimininkas);
-        Task<bool> UpdateSeimininkas(Seimininkas seimininkas);
-        Task<bool> DeleteSeimininkas(int id_seimininkas);
+        Task<IEnumerable<Seimininkas>> GetSeimininkusAsync();
+        Task<Seimininkas> GetSeimininkasByEmailAsync(string pastas);
+        Task<Seimininkas> GetSeimininkasByIdAsync(int id_seimininkas);
+        Task<Seimininkas> CreateSeimininkasAsync(Seimininkas seimininkas);
+        Task<bool> UpdateSeimininkasAsync(Seimininkas seimininkas);
+        Task<bool> DeleteSeimininkasAsync(int id_seimininkas);
     }
 }

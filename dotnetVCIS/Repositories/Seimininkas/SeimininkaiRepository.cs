@@ -19,7 +19,7 @@ namespace dotnetVCIS.Repositories
             return new NpgsqlConnection(_connectionString.ConnectionString);
         }
 
-        public async Task<IEnumerable<Seimininkas>> GetSeimininkus()
+        public async Task<IEnumerable<Seimininkas>> GetSeimininkusAsync()
         {
             var db = dbConnection();
 
@@ -30,7 +30,7 @@ namespace dotnetVCIS.Repositories
             return await db.QueryAsync<Seimininkas>(query, new { });
         }
 
-        public async Task<Seimininkas> GetSeimininkasByEmail(string pastas)
+        public async Task<Seimininkas> GetSeimininkasByEmailAsync(string pastas)
         {
             var db = dbConnection();
 
@@ -41,7 +41,7 @@ namespace dotnetVCIS.Repositories
             return await db.QueryFirstOrDefaultAsync<Seimininkas>(query, new { Pastas = pastas });
         }
 
-        public async Task<Seimininkas> GetSeimininkasByID(int id_seimininkas)
+        public async Task<Seimininkas> GetSeimininkasByIdAsync(int id_seimininkas)
         {
             var db = dbConnection();
 
@@ -52,7 +52,7 @@ namespace dotnetVCIS.Repositories
             return await db.QueryFirstOrDefaultAsync<Seimininkas>(query, new { Id_seimininkas = id_seimininkas });
         }
 
-        public async Task<Seimininkas> CreateSeimininkas(Seimininkas seimininkas)
+        public async Task<Seimininkas> CreateSeimininkasAsync(Seimininkas seimininkas)
         {
             var db = dbConnection();
 
@@ -63,7 +63,7 @@ namespace dotnetVCIS.Repositories
             return await db.QueryFirstOrDefaultAsync<Seimininkas>(query, new { seimininkas.vardas, seimininkas.pavarde, seimininkas.pastas, seimininkas.telnr, seimininkas.slaptazodis });
         }
 
-        public async Task<bool> UpdateSeimininkas(Seimininkas seimininkas)
+        public async Task<bool> UpdateSeimininkasAsync(Seimininkas seimininkas)
         {
             var db = dbConnection();
 
@@ -76,7 +76,7 @@ namespace dotnetVCIS.Repositories
             return result > 0;
         }
 
-        public async Task<bool> DeleteSeimininkas(int id_seimininkas)
+        public async Task<bool> DeleteSeimininkasAsync(int id_seimininkas)
         {
             var db = dbConnection();
 
