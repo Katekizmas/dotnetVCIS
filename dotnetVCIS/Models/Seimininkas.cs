@@ -8,7 +8,7 @@ namespace dotnetVCIS.Models
 {
     public record Seimininkas
     {
-        public Guid id_seimininkas { get; init; }
+        public int id_seimininkas { get; init; }
         public string vardas { get; init; }
         public string pavarde { get; init; }
         public string pastas { get; init; }

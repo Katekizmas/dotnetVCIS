@@ -15,28 +15,32 @@ namespace dotnetVCIS.Controllers
     [Route("seimininkas")] // [controller] /seimininkas
     public class SeimininkaiController : ControllerBase
     {
-        private readonly ISeimininkaiInterface repository;
+        private readonly ISeimininkaiRepository _repository;
 
-        public SeimininkaiController(ISeimininkaiInterface repository)
+        public SeimininkaiController(ISeimininkaiRepository repository)
         {
-            this.repository = repository;
+            this._repository = repository;
         }
 
         [HttpGet] // GET /seimininkas
-        public ActionResult<IEnumerable<SeimininkasDTO>> getSeimininkai()
+        public async Task<ActionResult<IEnumerable<SeimininkasDTO>>> GetSeimininkus()
         {
             //var seimininkai = repository.GetSeimininkus().Select(seimininkas => seimininkas.AsDTO());
-            var seimininkai = repository.GetSeimininkus();
+            var seimininkai = await _repository.GetSeimininkus();
+            Console.WriteLine(seimininkai);
             if(seimininkai is null)
                 return NotFound();
 
-            return Ok(new JsonResult(seimininkai));
+            return Ok(seimininkai);
         }
-        
-        [HttpGet("{id_seimininkas}")] // GET /seimininkas/{id}
-        public ActionResult<Seimininkas> GetSeimininkas(Guid id_seimininkas)
+
+        [HttpGet("{pastas}")] // GET /seimininkas/{pastas}
+        public async Task<ActionResult<SeimininkasDTO>> GetSeimininkasByEmail(string pastas)
         {
-            var seimininkas = repository.GetSeimininkas(id_seimininkas);
+            if (pastas is null)
+                return BadRequest();
+
+            var seimininkas = await _repository.GetSeimininkasByEmail(pastas);
 
             if(seimininkas is null)
                 return NotFound();
@@ -45,11 +49,15 @@ namespace dotnetVCIS.Controllers
         }
 
         [HttpPost] // POST /seimininkas
-        public ActionResult<SeimininkasDTO> CreateSeimininkas(CreateSeimininkasDTO seimininkasDTO)
+        public async Task<ActionResult<SeimininkasDTO>> CreateSeimininkas(CreateSeimininkasDTO seimininkasDTO)
         {
+            if (seimininkasDTO is null)
+                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             Seimininkas seimininkas = new()
             {
-                id_seimininkas = Guid.NewGuid(),
                 vardas = seimininkasDTO.vardas,
                 pavarde = seimininkasDTO.pavarde,
                 telnr = seimininkasDTO.telnr,
@@ -57,15 +65,15 @@ namespace dotnetVCIS.Controllers
                 slaptazodis = seimininkasDTO.slaptazodis
             };
 
-            repository.CreateSeimininkas(seimininkas);
+            var insertedSeimininkas = await _repository.CreateSeimininkas(seimininkas);
 
-            return CreatedAtAction(nameof(GetSeimininkas), new { id = seimininkas.id_seimininkas }, seimininkas.AsDTO());
+            return Created("Created", insertedSeimininkas);
         }
 
-        [HttpPut("{id_seimininkas}")] // PUT /seimininkas/{id}
-        public ActionResult UpdateSeimininkas(Guid id_seimininkas, UpdateSeimininkasDTO seimininkasDTO)
+        [HttpPut("{id_seimininkas}")] // PUT /seimininkas/{id} // Poto paimti id iš body.
+        public async Task<ActionResult> UpdateSeimininkas(int id_seimininkas, UpdateSeimininkasDTO seimininkasDTO)
         {
-            var existingSeimininkas = repository.GetSeimininkas(id_seimininkas);
+            var existingSeimininkas = await _repository.GetSeimininkasByID(id_seimininkas);
 
             if (existingSeimininkas is null)
                 return NotFound();
@@ -73,23 +81,23 @@ namespace dotnetVCIS.Controllers
             Seimininkas updatedSeimininkas = existingSeimininkas with
             {
                 telnr = seimininkasDTO.telnr,
-                slaptazodis = seimininkasDTO.slaptazodis
+                //slaptazodis = seimininkasDTO.slaptazodis
             };
 
-            repository.UpdateSeimininkas(updatedSeimininkas);
+            await _repository.UpdateSeimininkas(updatedSeimininkas);
 
             return NoContent();
         }
 
         [HttpDelete("{id_seimininkas}")] // DELETE /seimininkas/
-        public ActionResult DeleteSeimininkas(Guid id_seimininkas)
+        public async Task<ActionResult> DeleteSeimininkas(int id_seimininkas)
         {
-            var existingSeimininkas = repository.GetSeimininkas(id_seimininkas);
+            var existingSeimininkas = await _repository.GetSeimininkasByID(id_seimininkas);
 
             if (existingSeimininkas is null)
                 return NotFound();
 
-            repository.DeleteSeimininkas(id_seimininkas);
+            await _repository.DeleteSeimininkas(id_seimininkas);
 
             return NoContent();
         }

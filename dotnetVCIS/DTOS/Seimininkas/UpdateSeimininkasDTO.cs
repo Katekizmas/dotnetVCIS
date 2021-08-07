@@ -10,7 +10,7 @@ namespace dotnetVCIS.DTOS
     {
         [Required]
         public string telnr { get; init; }
-        [Required]
-        public string slaptazodis { get; init; }
+        /*[Required]
+        public string slaptazodis { get; init; }*/
     }
 }

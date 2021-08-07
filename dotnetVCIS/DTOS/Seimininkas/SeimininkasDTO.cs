@@ -7,7 +7,7 @@ namespace dotnetVCIS.Dtos
 {
     public record SeimininkasDTO
     {
-            public Guid id_seimininkas { get; init; }
+            public int id_seimininkas { get; init; }
             public string vardas { get; init; }
             public string pavarde { get; init; }
             public string pastas { get; init; }
