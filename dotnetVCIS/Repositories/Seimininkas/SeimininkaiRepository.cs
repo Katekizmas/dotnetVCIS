@@ -2,6 +2,7 @@
 //using dotnetVCIS.DTOS;
 using dotnetVCIS.Models;
 using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,6 @@ namespace dotnetVCIS.Repositories
         public async Task<IEnumerable<Seimininkas>> GetSeimininkusAsync()
         {
             var db = dbConnection();
-
             string query = @"
                 SELECT * FROM Seimininkas;
             ";

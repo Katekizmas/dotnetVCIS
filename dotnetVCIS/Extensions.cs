@@ -1,9 +1,5 @@
 ﻿using dotnetVCIS.Dtos;
 using dotnetVCIS.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace dotnetVCIS
 {
@@ -11,15 +7,7 @@ namespace dotnetVCIS
     {
         public static SeimininkasDTO AsDTO(this Seimininkas seimininkas)
         {
-            return new SeimininkasDTO
-            {
-                id_seimininkas = seimininkas.id_seimininkas,
-                vardas = seimininkas.vardas,
-                pavarde = seimininkas.pavarde,
-                telnr = seimininkas.telnr,
-                pastas = seimininkas.pastas,
-                slaptazodis = seimininkas.slaptazodis
-            };
+            return new SeimininkasDTO(seimininkas.id_seimininkas, seimininkas.vardas, seimininkas.pavarde, seimininkas.telnr, seimininkas.pastas, seimininkas.slaptazodis);
         }
     }
 }

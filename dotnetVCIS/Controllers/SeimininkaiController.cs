@@ -1,11 +1,9 @@
 ﻿using dotnetVCIS.Dtos;
-using dotnetVCIS.DTOS;
 using dotnetVCIS.Models;
 using dotnetVCIS.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace dotnetVCIS.Controllers
