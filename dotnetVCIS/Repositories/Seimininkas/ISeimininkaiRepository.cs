@@ -7,7 +7,7 @@ namespace dotnetVCIS.Repositories
 {
     public interface ISeimininkaiRepository
     {
-        Task<IEnumerable<Seimininkas>> GetSeimininkusAsync();
+        Task<IEnumerable<Seimininkas>> GetSeimininkaiAsync();
         Task<Seimininkas> GetSeimininkasByEmailAsync(string pastas);
         Task<Seimininkas> GetSeimininkasByIdAsync(int id_seimininkas);
         Task<Seimininkas> CreateSeimininkasAsync(Seimininkas seimininkas);

@@ -1,4 +1,5 @@
 using dotnetVCIS.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,16 @@ namespace dotnetVCIS
 
             //services.AddSingleton<ISeimininkaiRepository, SeimininkaiRepository>(); // or AddScoped?
             services.AddScoped<ISeimininkaiRepository, SeimininkaiRepository>();
+            services.AddScoped<IGyvunaiRepository, GyvunaiRepository>();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options => {
+                    options.Cookie.Name = "SESIJOS_ID";
+                    /*options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = false;
+                    options.Cookie.SameSite = SameSiteMode.Lax;*/
+                    //options.LoginPath = "/prisijungimas";
+                });
             services.AddControllers(options =>
             {
                 options.SuppressAsyncSuffixInActionNames = false; // .Net will stop removing async sufix's in run time
@@ -58,14 +68,12 @@ namespace dotnetVCIS
         {
             /*//Enable CORS
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());*/
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "dotnetVCIS v1"));
             }
-
             if (env.IsDevelopment())
             {
                 app.UseHttpsRedirection();
@@ -73,6 +81,7 @@ namespace dotnetVCIS
 
             app.UseRouting();
 
+            app.UseAuthentication(); // for applying cookie in front end
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -103,6 +112,7 @@ namespace dotnetVCIS
                     Predicate = (_) => false
                 });
             });
+            app.UsePathBase(new PathString("/api/v1"));
         }
     }
 }

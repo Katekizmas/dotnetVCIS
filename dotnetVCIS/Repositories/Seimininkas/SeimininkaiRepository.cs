@@ -1,7 +1,6 @@
-﻿using Dapper;
-//using dotnetVCIS.DTOS;
+﻿using Npgsql;
+using Dapper;
 using dotnetVCIS.Models;
-using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,9 +19,10 @@ namespace dotnetVCIS.Repositories
             return new NpgsqlConnection(_connectionString.ConnectionString);
         }
 
-        public async Task<IEnumerable<Seimininkas>> GetSeimininkusAsync()
+        public async Task<IEnumerable<Seimininkas>> GetSeimininkaiAsync()
         {
             var db = dbConnection();
+
             string query = @"
                 SELECT * FROM Seimininkas;
             ";

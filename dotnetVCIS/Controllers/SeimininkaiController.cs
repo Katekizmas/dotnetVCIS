@@ -2,15 +2,15 @@
 using dotnetVCIS.Models;
 using dotnetVCIS.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace dotnetVCIS.Controllers
 {
     //
+    [Route("api/seimininkas")]
     [ApiController]
-    [Route("seimininkas")] // [controller] /seimininkas
     public class SeimininkaiController : ControllerBase
     {
         private readonly ISeimininkaiRepository _repository;
@@ -21,11 +21,12 @@ namespace dotnetVCIS.Controllers
         }
 
         [HttpGet] // GET /seimininkas
-        public async Task<ActionResult<IEnumerable<SeimininkasDTO>>> GetSeimininkusAsync()
+        public async Task<ActionResult<IEnumerable<SeimininkasDTO>>> GetSeimininkaiAsync()
         {
             //var seimininkai = repository.GetSeimininkus().Select(seimininkas => seimininkas.AsDTO());
-            var seimininkai = await _repository.GetSeimininkusAsync();
-            Console.WriteLine(seimininkai);
+            var seimininkai = (await _repository.GetSeimininkaiAsync())
+                                .Select(seimininkas => seimininkas.AsDTO());
+
             if(seimininkai is null)
                 return NotFound();
 
@@ -75,6 +76,8 @@ namespace dotnetVCIS.Controllers
 
             if (existingSeimininkas is null)
                 return NotFound();
+
+            //existingSeimininkas.telnr = seimininkasDTO.telnr;
 
             Seimininkas updatedSeimininkas = existingSeimininkas with
             {

@@ -15,5 +15,6 @@ namespace dotnetVCIS.Models
         public string veisle { get; set; }
         public string lytis { get; set; }
         public string cipas { get; set; }
+        public string rusis { get; set; } // pavadinimas from "Rusis" model
     }
 }
